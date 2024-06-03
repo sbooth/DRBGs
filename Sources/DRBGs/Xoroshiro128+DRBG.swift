@@ -111,16 +111,15 @@ public struct Xoroshiro128PlusDRBG: RandomNumberGenerator {
 			}
 		}
 
-		state.0 = s0
-		state.1 = s1
+		state = (s0, s1)
 	}
 
-	/// The longjump function for the generator
+	/// The long-jump function for the generator
 	///
 	/// It is equivalent to 2^96 calls to `next()`.  It can be used to generate
 	/// 2^32 starting points, from each of which `jump()` will generate 2^32
 	/// non-overlapping subsequences for parallel distributed computations.
-	public mutating func longjump() {
+	public mutating func long_jump() {
 		let magic: [UInt64] = [0xd2a98b26625eee7b, 0xdddf9b1090aa7ac1]
 
 		var s0: UInt64 = 0
@@ -136,8 +135,7 @@ public struct Xoroshiro128PlusDRBG: RandomNumberGenerator {
 			}
 		}
 
-		state.0 = s0
-		state.1 = s1
+		state = (s0, s1)
 	}
 }
 
