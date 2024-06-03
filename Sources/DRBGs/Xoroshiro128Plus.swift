@@ -39,7 +39,7 @@ import Glibc
 /// An implementation of the xoroshiro128+ (XOR/rotate/shift/rotate) deterministic random bit generator
 ///
 /// - seealso: https://prng.di.unimi.it
-public struct Xoroshiro128PlusDRBG: RandomNumberGenerator {
+public struct Xoroshiro128Plus: RandomNumberGenerator {
 	/// The type of internal state maintained by the DRBG
 	public typealias StateType = (UInt64, UInt64)
 
@@ -138,16 +138,16 @@ public struct Xoroshiro128PlusDRBG: RandomNumberGenerator {
 	}
 }
 
-extension Xoroshiro128PlusDRBG: Equatable {
-	/// Compares two `Xoroshiro128PlusDRBG` objects for equality
+extension Xoroshiro128Plus: Equatable {
+	/// Compares two `Xoroshiro128Plus` objects for equality
 	///
-	/// Two `Xoroshiro128PlusDRBG` objects are equal if their 128-bit state is the same.
+	/// Two `Xoroshiro128Plus` objects are equal if their 128-bit state is the same.
 	///
 	/// - parameter lhs: lhs
 	/// - parameter rhs: rhs
 	///
 	/// - returns: `true` if the two objects have the same state, `false` otherwise
-	public static func ==(lhs: Xoroshiro128PlusDRBG, rhs: Xoroshiro128PlusDRBG) -> Bool {
+	public static func ==(lhs: Xoroshiro128Plus, rhs: Xoroshiro128Plus) -> Bool {
 		lhs.state == rhs.state
 	}
 }

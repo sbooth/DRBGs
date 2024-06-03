@@ -13,7 +13,7 @@ import Glibc
 #endif
 
 /// An implementation of the splitmix64 deterministic random bit generator
-public struct SplitMix64DRBG: RandomNumberGenerator {
+public struct SplitMix64: RandomNumberGenerator {
 	/// The current state of the DRBG
 	public private(set) var state: UInt64 = 0
 
@@ -55,16 +55,16 @@ public struct SplitMix64DRBG: RandomNumberGenerator {
 	}
 }
 
-extension SplitMix64DRBG: Equatable {
-	/// Compares two `SplitMix64DRBG` objects for equality
+extension SplitMix64: Equatable {
+	/// Compares two `SplitMix64` objects for equality
 	///
-	/// Two `SplitMix64DRBG` objects are equal if their 64-bit state is the same.
+	/// Two `SplitMix64` objects are equal if their 64-bit state is the same.
 	///
 	/// - parameter lhs: lhs
 	/// - parameter rhs: rhs
 	///
 	/// - returns: `true` if the two objects have the same state, `false` otherwise
-	public static func ==(lhs: SplitMix64DRBG, rhs: SplitMix64DRBG) -> Bool {
+	public static func ==(lhs: SplitMix64, rhs: SplitMix64) -> Bool {
 		lhs.state == rhs.state
 	}
 }

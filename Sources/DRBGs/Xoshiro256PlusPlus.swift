@@ -26,7 +26,7 @@ import Glibc
 /// An implementation of the xoshiro256++ (XOR/shift/rotate) deterministic random bit generator
 ///
 /// - seealso: https://prng.di.unimi.it
-public struct Xoshiro256PlusPlusDRBG: RandomNumberGenerator {
+public struct Xoshiro256PlusPlus: RandomNumberGenerator {
 	/// The type of internal state maintained by the DRBG
 	public typealias StateType = (UInt64, UInt64, UInt64, UInt64)
 
@@ -137,16 +137,16 @@ public struct Xoshiro256PlusPlusDRBG: RandomNumberGenerator {
 	}
 }
 
-extension Xoshiro256PlusPlusDRBG: Equatable {
-	/// Compares two `Xoshiro256PlusPlusDRBG` objects for equality
+extension Xoshiro256PlusPlus: Equatable {
+	/// Compares two `Xoshiro256PlusPlus` objects for equality
 	///
-	/// Two `Xoshiro256PlusPlusDRBG` objects are equal if their 256-bit state is the same.
+	/// Two `Xoshiro256PlusPlus` objects are equal if their 256-bit state is the same.
 	///
 	/// - parameter lhs: lhs
 	/// - parameter rhs: rhs
 	///
 	/// - returns: `true` if the two objects have the same state, `false` otherwise
-	public static func ==(lhs: Xoshiro256PlusPlusDRBG, rhs: Xoshiro256PlusPlusDRBG) -> Bool {
+	public static func ==(lhs: Xoshiro256PlusPlus, rhs: Xoshiro256PlusPlus) -> Bool {
 		lhs.state == rhs.state
 	}
 }
