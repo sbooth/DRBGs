@@ -66,7 +66,7 @@ public struct Xoshiro256StarStar: RandomNumberGenerator {
 	///
 	/// - returns: An unsigned integer *u* such that 0 ≤ *u* ≤ `UInt64.max`
 	public mutating func next() -> UInt64 {
-		let result = (state.1 * 5).rotatedLeft(by: 7) * 9
+		let result = (state.1 &* 5).rotatedLeft(by: 7) &* 9
 		let t = state.1 << 17
 
 		state.2 ^= state.0
