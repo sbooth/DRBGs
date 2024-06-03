@@ -215,14 +215,13 @@ private func _add(x: UInt64, y:Int) -> Int {
 // End Boost-inspired code
 // ============================================================
 
-// The code for unitDouble() was taken from http://xoroshiro.di.unimi.it/
+// The code for unitDouble() was taken from https://prng.di.unimi.it
 extension RandomNumberGenerator {
 	/// Generates a floating-point number in the interval [0, 1)
 	///
 	/// - returns: A floating-point number *f* such that 0 ≤ *f* < 1
 	public mutating func unitDouble() -> Double {
 		let x = next()
-		let d = Double(bitPattern: 0x3ff << 52 | x >> 12)
-		return d - 1.0
+		return Double((x >> 11)) * 0x1.0p-53
 	}
 }
