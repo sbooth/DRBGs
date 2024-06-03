@@ -12,6 +12,30 @@ import Glibc
 #error("Unsupported Platform")
 #endif
 
+/* This is xoroshiro128+ 1.0, our best and fastest small-state generator
+ for floating-point numbers, but its state space is large enough only
+ for mild parallelism. We suggest to use its upper bits for
+ floating-point generation, as it is slightly faster than
+ xoroshiro128++/xoroshiro128**. It passes all tests we are aware of
+ except for the four lower bits, which might fail linearity tests (and
+ just those), so if low linear complexity is not considered an issue (as
+ it is usually the case) it can be used to generate 64-bit outputs, too;
+ moreover, this generator has a very mild Hamming-weight dependency
+ making our test (http://prng.di.unimi.it/hwd.php) fail after 5 TB of
+ output; we believe this slight bias cannot affect any application. If
+ you are concerned, use xoroshiro128++, xoroshiro128** or xoshiro256+.
+
+ We suggest to use a sign test to extract a random Boolean value, and
+ right shifts to extract subsets of bits.
+
+ The state must be seeded so that it is not everywhere zero. If you have
+ a 64-bit seed, we suggest to seed a splitmix64 generator and use its
+ output to fill s.
+
+ NOTE: the parameters (a=24, b=16, b=37) of this version give slightly
+ better results in our test than the 2016 version (a=55, b=14, c=36).
+ */
+
 /// An implementation of the xoroshiro128+ (XOR/rotate/shift/rotate) deterministic random bit generator
 ///
 /// - seealso: https://prng.di.unimi.it
@@ -56,22 +80,48 @@ public struct Xoroshiro128PlusDRBG: RandomNumberGenerator {
 	///
 	/// - returns: An unsigned integer *u* such that 0 ≤ *u* ≤ `UInt64.max`
 	public mutating func next() -> UInt64 {
-		let (l, k0, k1, k2): (UInt64, UInt64, UInt64, UInt64) = (64, 55, 14, 36)
+		let s0 = state.0
+		var s1 = state.1
+		let result = s0 &+ s1
 
-		let result = state.0 &+ state.1
-		let x = state.0 ^ state.1
-		state.0 = ((state.0 << k0) | (state.0 >> (l - k0))) ^ x ^ (x << k1)
-		state.1 = (x << k2) | (x >> (l - k2))
+		s1 ^= s0
+		state.0 = rotl(s0, 24) ^ s1 ^ (s1 << 16)
+		state.1 = rotl(s1, 37)
 
 		return result
 	}
 
 	/// The jump function for the generator
 	///
-	/// It is equivalent to 2^64 calls to `next()`.  It can be used to generate 
+	/// It is equivalent to 2^64 calls to `next()`.  It can be used to generate
 	/// 2^64 non-overlapping subsequences for parallel computations.
 	public mutating func jump() {
-		let magic: [UInt64] = [0xbeac0467eba5facb, 0xd86b048b86aa9922]
+		let magic: [UInt64] = [0xdf900294d8f554a5, 0x170865df4b3201fc]
+
+		var s0: UInt64 = 0
+		var s1: UInt64 = 0
+
+		for val in magic {
+			for bit: UInt64 in 0 ..< 64 {
+				if (val & (UInt64(1) << bit)) != 0 {
+					s0 ^= state.0
+					s1 ^= state.1
+				}
+				_ = next()
+			}
+		}
+
+		state.0 = s0
+		state.1 = s1
+	}
+
+	/// The longjump function for the generator
+	///
+	/// It is equivalent to 2^96 calls to `next()`.  It can be used to generate
+	/// 2^32 starting points, from each of which `jump()` will generate 2^32
+	/// non-overlapping subsequences for parallel distributed computations.
+	public mutating func longjump() {
+		let magic: [UInt64] = [0xd2a98b26625eee7b, 0xdddf9b1090aa7ac1]
 
 		var s0: UInt64 = 0
 		var s1: UInt64 = 0
