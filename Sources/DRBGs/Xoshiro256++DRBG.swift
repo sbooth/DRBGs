@@ -4,7 +4,13 @@
 // MIT license
 //
 
+#if canImport(Darwin)
 import Darwin
+#elseif canImport(Glibc)
+import Glibc
+#else
+#error("Unsupported Platform")
+#endif
 
 /// An implementation of the Xoshiro256++ deterministic random bit generator
 ///
