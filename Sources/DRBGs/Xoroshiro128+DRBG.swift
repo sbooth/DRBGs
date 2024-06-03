@@ -12,9 +12,9 @@ import Glibc
 #error("Unsupported Platform")
 #endif
 
-/// An implementation of the Xoroshiro128+ deterministic random bit generator
+/// An implementation of the xoroshiro128+ (XOR/rotate/shift/rotate) deterministic random bit generator
 ///
-/// - seealso: http://prng.di.unimi.it
+/// - seealso: https://prng.di.unimi.it
 public struct Xoroshiro128PlusDRBG: RandomNumberGenerator {
 	/// The type of internal state maintained by the DRBG
 	public typealias StateType = (UInt64, UInt64)
