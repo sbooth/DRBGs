@@ -8,6 +8,8 @@ Swift implementations of the following deterministic random bit generators:
 - [xoshiro256++](https://prng.di.unimi.it/xoshiro256plusplus.c)
 - [xoshiro256**](https://prng.di.unimi.it/xoshiro256starstar.c)
 - [xoshiro256+](https://prng.di.unimi.it/xoshiro256plus.c)
+- [xoroshiro128++](https://prng.di.unimi.it/xoshiro128plusplus.c)
+- [xoroshiro128**](https://prng.di.unimi.it/xoshiro128starstar.c)
 - [xoroshiro128+](https://prng.di.unimi.it/xoshiro128plus.c)
 - [splitmix64](https://prng.di.unimi.it/splitmix64.c)
 
