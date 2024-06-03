@@ -62,8 +62,7 @@ public struct Xoroshiro128PlusDRBG: RandomNumberGenerator {
 	///
 	/// - parameter seed: The initial state
 	public init(drbg: inout RandomNumberGenerator) {
-		state.0 = drbg.next()
-		state.1 = drbg.next()
+		state = (drbg.next(), drbg.next())
 	}
 
 	/// Initializes the DRBG with the specified seed
@@ -85,8 +84,8 @@ public struct Xoroshiro128PlusDRBG: RandomNumberGenerator {
 		let result = s0 &+ s1
 
 		s1 ^= s0
-		state.0 = rotl(s0, 24) ^ s1 ^ (s1 << 16)
-		state.1 = rotl(s1, 37)
+		state.0 = s0.rotatedLeft(by: 24) ^ s1 ^ (s1 << 16)
+		state.1 = s1.rotatedLeft(by: 37)
 
 		return result
 	}
