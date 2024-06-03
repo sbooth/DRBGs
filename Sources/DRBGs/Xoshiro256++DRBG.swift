@@ -58,7 +58,7 @@ public struct Xoshiro256PlusPlusDRBG: RandomNumberGenerator {
 	///
 	/// - returns: An unsigned integer *u* such that 0 ≤ *u* ≤ `UInt64.max`
 	public mutating func next() -> UInt64 {
-		let result = _rotl(state.0 &+ state.3, 23) &+ state.0
+		let result = rotl(state.0 &+ state.3, 23) &+ state.0
 		let t = state.1 << 17
 
 		state.2 ^= state.0
@@ -68,7 +68,7 @@ public struct Xoshiro256PlusPlusDRBG: RandomNumberGenerator {
 
 		state.2 ^= t
 
-		state.3 = _rotl(state.3, 45)
+		state.3 = rotl(state.3, 45)
 
 		return result
 	}
@@ -153,6 +153,6 @@ extension Xoshiro256PlusPlusDRBG: Equatable {
 ///
 /// - parameter x: The value containing the bits to rotate
 /// - parameter k: The number of
-private func _rotl(_ x: UInt64, _ k: Int) -> UInt64 {
+func rotl(_ x: UInt64, _ k: Int) -> UInt64 {
 	return (x << k) | (x >> (64 - k))
 }
