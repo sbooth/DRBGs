@@ -12,6 +12,17 @@ import Glibc
 #error("Unsupported Platform")
 #endif
 
+/* This is xoshiro256++ 1.0, one of our all-purpose, rock-solid generators.
+ It has excellent (sub-ns) speed, a state (256 bits) that is large
+ enough for any parallel application, and it passes all tests we are
+ aware of.
+
+ For generating just floating-point numbers, xoshiro256+ is even faster.
+
+ The state must be seeded so that it is not everywhere zero. If you have
+ a 64-bit seed, we suggest to seed a splitmix64 generator and use its
+ output to fill s. */
+
 /// An implementation of the xoshiro256++ (XOR/shift/rotate) deterministic random bit generator
 ///
 /// - seealso: https://prng.di.unimi.it
@@ -97,18 +108,15 @@ public struct Xoshiro256PlusPlusDRBG: RandomNumberGenerator {
 			}
 		}
 
-		state.0 = s0
-		state.1 = s1
-		state.2 = s3
-		state.3 = s3
+		state = (s0, s1, s2, s3)
 	}
 
-	/// The longjump function for the generator
+	/// The long-jump function for the generator
 	///
 	/// It is equivalent to 2^192 calls to `next()`.  It can be used to generate
 	/// 2^64 starting points, from each of which `jump()` will generate 2^64
 	/// non-overlapping subsequences for parallel distributed computations.
-	public mutating func longjump() {
+	public mutating func long_jump() {
 		let magic: [UInt64] = [0x76e15d3efefdcbbf, 0xc5004e441c522fb3, 0x77710069854ee241, 0x39109bb02acbe635]
 
 		var s0: UInt64 = 0
@@ -128,10 +136,7 @@ public struct Xoshiro256PlusPlusDRBG: RandomNumberGenerator {
 			}
 		}
 
-		state.0 = s0
-		state.1 = s1
-		state.2 = s3
-		state.3 = s3
+		state = (s0, s1, s2, s3)
 	}
 }
 
@@ -156,3 +161,9 @@ extension Xoshiro256PlusPlusDRBG: Equatable {
 func rotl(_ x: UInt64, _ k: Int) -> UInt64 {
 	return (x << k) | (x >> (64 - k))
 }
+
+#if false
+func rotl<T: FixedWidthInteger>(_ x: T, _ k: Int) -> T {
+	return (x << k) | (x >> (T.bitWidth - k))
+}
+#endif
