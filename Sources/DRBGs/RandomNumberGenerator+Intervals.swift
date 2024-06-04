@@ -54,11 +54,9 @@ extension RandomNumberGenerator {
 		let range = max - min
 		if range == 0 {
 			return 0
-		}
-		else if range == UInt64.max {
+		} else if range == UInt64.max {
 			return next() /*+ min*/
-		}
-		else {
+		} else {
 			var bucketSize = UInt64.max / (range + 1)
 			if UInt64.max % (range + 1) == range {
 				bucketSize += 1
@@ -123,11 +121,9 @@ extension RandomNumberGenerator {
 
 		if range == 0 {
 			return 0
-		}
-		else if range == UInt64.max {
+		} else if range == UInt64.max {
 			return _add(x: next(), y: min)
-		}
-		else {
+		} else {
 			var bucketSize = UInt64.max / (range + 1)
 			if UInt64.max % (range + 1) == range {
 				bucketSize += 1
@@ -183,11 +179,9 @@ extension RandomNumberGenerator {
 private func _subtract(x: Int, y: Int) -> UInt64 {
 	if y >= 0 {
 		return UInt64(x) - UInt64(y)
-	}
-	else if x >= 0 {
+	} else if x >= 0 {
 		return UInt64(x) + UInt64(-(y + 1)) + 1
-	}
-	else {
+	} else {
 		return UInt64(x - y)
 	}
 }
@@ -203,11 +197,9 @@ private func _subtract(x: Int, y: Int) -> UInt64 {
 private func _add(x: UInt64, y:Int) -> Int {
 	if y >= 0 {
 		return Int(x) + y
-	}
-	else if x > UInt64(-(y + 1)) {
+	} else if x > UInt64(-(y + 1)) {
 		return Int(x - UInt64(-(y + 1)) - 1)
-	}
-	else {
+	} else {
 		return Int(x) + y
 	}
 }
