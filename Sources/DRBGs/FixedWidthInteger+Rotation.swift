@@ -4,7 +4,7 @@
 // MIT license
 //
 
-extension FixedWidthInteger {
+extension FixedWidthInteger where Self: UnsignedInteger {
 	/// Performs a left bitwise rotation of `self` by `shift` and returns the result
 	///
 	/// - precondition: 0 < `shift` < `Self.bitWidth`
