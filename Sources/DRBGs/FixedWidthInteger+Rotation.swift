@@ -27,3 +27,27 @@ extension FixedWidthInteger where Self: UnsignedInteger {
 		self = self.rotatedLeft(by: shift)
 	}
 }
+
+extension FixedWidthInteger where Self: UnsignedInteger {
+	/// Performs a right bitwise rotation of `self` by `shift` and returns the result
+	///
+	/// - precondition: 0 < `shift` < `Self.bitWidth`
+	///
+	/// - parameter shift: The length of the rotation
+	///
+	/// - returns: The right bitwise rotation of `self` by `shift`
+	func rotatedRight(by shift: Int) -> Self {
+		(self >> shift) | (self << (Self.bitWidth - shift))
+	}
+
+	/// Rotates the bits of `self` right by `shift`
+	///
+	/// - precondition: 0 < `shift` < `Self.bitWidth`
+	///
+	/// - parameter shift: The length of the rotation
+	///
+	/// - returns: The right bitwise rotation of `self` by `shift`
+	mutating func rotateRight(by shift: Int) {
+		self = self.rotatedRight(by: shift)
+	}
+}
