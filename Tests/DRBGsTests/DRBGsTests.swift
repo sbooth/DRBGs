@@ -29,4 +29,14 @@ final class DRBGsTests: XCTestCase {
 		u.rotateRight(by: 3)
 		XCTAssertEqual(u, 0xA0001579)
 	}
+
+	func testSplitMix64() throws {
+		var sm = SplitMix64(seed: UInt64.max)
+		XCTAssertEqual(sm.next(), 16490336266968443936)
+	}
+
+	func testXoroshiro128PlusPlus() throws {
+		var xo = Xoroshiro128PlusPlus(seed: (UInt64.max, UInt64.max))
+		XCTAssertEqual(xo.next(), 18446744073709420542)
+	}
 }
