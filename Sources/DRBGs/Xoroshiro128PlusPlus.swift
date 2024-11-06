@@ -69,7 +69,7 @@ public struct Xoroshiro128PlusPlus: RandomNumberGenerator {
 	public mutating func next() -> UInt64 {
 		let s0 = state.0
 		var s1 = state.1
-		let result = (s0 &+ s1).rotatedLeft(by: 17) + s0
+		let result = (s0 &+ s1).rotatedLeft(by: 17) &+ s0
 
 		s1 ^= s0
 		state.0 = s0.rotatedLeft(by: 49) ^ s1 ^ (s1 << 21)
