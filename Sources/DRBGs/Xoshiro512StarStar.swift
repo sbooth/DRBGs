@@ -23,7 +23,7 @@ import Glibc
  a 64-bit seed, we suggest to seed a splitmix64 generator and use its
  output to fill s. */
 
-/// An implementation of the xoshiro512\*\* (XOR/shift/rotate) deterministic random bit generator
+/// An implementation of the xoshiro512** (XOR/shift/rotate) deterministic random bit generator
 ///
 /// - seealso: https://prng.di.unimi.it
 public struct Xoshiro512StarStar: RandomNumberGenerator {
