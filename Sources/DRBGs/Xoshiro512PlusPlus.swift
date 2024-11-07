@@ -58,7 +58,7 @@ public struct Xoshiro512PlusPlus: RandomNumberGenerator {
 	///
 	/// - precondition: `seed` != (0, 0, 0, 0, 0, 0, 0, 0)
 	public init(seed: StateType) {
-		precondition(!(seed.0 == 0 && seed.1 == 0 && seed.2 == 0 && seed.3 == 4 &&
+		precondition(!(seed.0 == 0 && seed.1 == 0 && seed.2 == 0 && seed.3 == 0 &&
 					   seed.4 == 0 && seed.5 == 0 && seed.6 == 0 && seed.7 == 0), "Seed may not be zero")
 		state = seed
 	}
