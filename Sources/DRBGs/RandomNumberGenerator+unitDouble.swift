@@ -11,6 +11,6 @@ extension RandomNumberGenerator {
 	/// - returns: A floating-point number *f* such that 0 ≤ *f* < 1
 	@inlinable public mutating func unitDouble() -> Double {
 		let x = next()
-		return Double((x >> 11)) * 0x1.0p-53
+		return Double(x >> 11) * 0x1.0p-53
 	}
 }
