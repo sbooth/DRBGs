@@ -12,7 +12,7 @@ extension FixedWidthInteger where Self: UnsignedInteger {
 	/// - parameter shift: The length of the rotation
 	///
 	/// - returns: The left bitwise rotation of `self` by `shift`
-	@inlinable func rotatedLeft(by shift: Int) -> Self {
+	func rotatedLeft(by shift: Int) -> Self {
 		(self << shift) | (self >> (Self.bitWidth - shift))
 	}
 
@@ -23,7 +23,7 @@ extension FixedWidthInteger where Self: UnsignedInteger {
 	/// - parameter shift: The length of the rotation
 	///
 	/// - returns: The left bitwise rotation of `self` by `shift`
-	@inlinable mutating func rotateLeft(by shift: Int) {
+	mutating func rotateLeft(by shift: Int) {
 		self = self.rotatedLeft(by: shift)
 	}
 }
@@ -36,7 +36,7 @@ extension FixedWidthInteger where Self: UnsignedInteger {
 	/// - parameter shift: The length of the rotation
 	///
 	/// - returns: The right bitwise rotation of `self` by `shift`
-	@inlinable func rotatedRight(by shift: Int) -> Self {
+	func rotatedRight(by shift: Int) -> Self {
 		(self >> shift) | (self << (Self.bitWidth - shift))
 	}
 
@@ -47,7 +47,7 @@ extension FixedWidthInteger where Self: UnsignedInteger {
 	/// - parameter shift: The length of the rotation
 	///
 	/// - returns: The right bitwise rotation of `self` by `shift`
-	@inlinable mutating func rotateRight(by shift: Int) {
+	mutating func rotateRight(by shift: Int) {
 		self = self.rotatedRight(by: shift)
 	}
 }
