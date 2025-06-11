@@ -68,7 +68,7 @@ public struct Xoshiro128Plus {
 	///
 	/// - returns: An unsigned integer *u* such that 0 ≤ *u* ≤ `UInt32.max`
 	public mutating func next() -> UInt32 {
-		let result = state.0 + state.3
+		let result = state.0 &+ state.3
 		let t = state.1 << 9
 
 		state.2 ^= state.0
