@@ -15,6 +15,7 @@ Swift implementations of the following deterministic random bit generators:
 - [xoshiro512++](https://prng.di.unimi.it/xoshiro512plusplus.c)
 - [xoshiro512**](https://prng.di.unimi.it/xoshiro512starstar.c)
 - [xoshiro512+](https://prng.di.unimi.it/xoshiro512plus.c)
+- [wyrand](https://github.com/wangyi-fudan/wyhash)
 
 ## Documentation
 
